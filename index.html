@@ -1,58 +1,76 @@
-<!DOCTYPE html><html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenz Market CDN Uploader</title>
-    <link rel="stylesheet" href="/style.css"/><!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<!DOCTYPE html>  <html lang="id">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  
+    <title>Kenz Market CDN Uploader</title>  
+    <link rel="stylesheet" href="/style.css"/>  
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>  
+<body>  
+    <div class="container">  
+        <h1>Kenz Market CDN Uploader</h1>  
+        <p>Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>  
+        <p>Support Kenz Market🌟</p>  <div id="dropZone" onclick="document.getElementById('fileInput').click();">  
+        <p id="dropText">📂 Pilih file atau drop di sini.</p>  
+        <input type="file" id="fileInput" hidden>  
+    </div>  
 
-</head>
-<body>
-    <div class="container">
-        <h1>Kenz Market CDN Uploader</h1>
-        <p>Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
-        <p>Support Kenz Market🌟</p><div id="dropZone" onclick="document.getElementById('fileInput').click();">
-        <p id="dropText">📂 Pilih file atau drop di sini.</p>
-        <input type="file" id="fileInput" hidden>
-    </div>
-
-    <div id="result">Hasil akan muncul di sini.</div>
+    <div id="result">Hasil akan muncul di sini.</div>  
     
-    <footer>
-      &copy; 2025 CDN File Uploader By Kenz
-    </footer>
-</div>
+    <footer>  
+      &copy; 2025 CDN File Uploader By Kenz  
+    </footer>  
+</div>  
 
 <script>
-    document.getElementById("fileInput").addEventListener("change", function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append("file", file);
+    let uploadedFiles = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
 
-            fetch("/upload", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                document.getElementById("result").innerHTML = `URL: <a href="${data.url}" target="_blank">${data.url}</a>`;
-                
-                // Kirim notifikasi ke bot Telegram
-                const botToken = "YOUR_BOT_TOKEN";
-                const chatId = "YOUR_CHAT_ID";
-                const message = `Uploader Baru Ni Icibos\n\nResult: ${data.url}\nSize: ${file.size} bytes\nTime: ${new Date().toLocaleString()}`;
-                
-                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ chat_id: chatId, text: message })
-                });
-            })
-            .catch(error => console.error("Error uploading file:", error));
-        }
+    document.getElementById("fileInput").addEventListener("change", function(event) {
+        handleFileUpload(event.target.files[0]);
     });
+
+    function handleFileUpload(file) {
+        if (!file) return;
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            let fileData = {
+                id: generateID(),
+                name: file.name,
+                type: file.type,
+                content: e.target.result,
+                size: (file.size / 1024).toFixed(2) + ' KB',
+                time: new Date().toLocaleString()
+            };
+
+            uploadedFiles.push(fileData);
+            localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));
+
+            document.getElementById("result").innerHTML = `<a class="json-link" href="?kenzcdn=${fileData.id}" target="_blank">🔗 ${fileData.name}</a>`;
+
+            sendTelegramNotification(fileData);
+        };
+
+        if (file.type.startsWith("image/")) {
+            reader.readAsDataURL(file);
+        } else {
+            reader.readAsText(file);
+        }
+    }
+
+    function generateID() {
+        return Math.random().toString(36).substr(2, 10);
+    }
+
+    function sendTelegramNotification(fileData) {
+        let botToken = "YOUR_BOT_TOKEN";
+        let chatId = "YOUR_CHAT_ID";
+        let message = `Uploader Baru Ni Icibos\n\nResult: ${window.location.origin}/?kenzcdn=${fileData.id}\nSize: ${fileData.size}\nTime: ${fileData.time}`;
+        
+        let url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+        fetch(url).catch(error => console.error("Error sending Telegram notification", error));
+    }
 </script>
 
-</body>
+</body>  
 </html>
