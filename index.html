@@ -2,60 +2,82 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenz Market CDN Uploader</title>
+    <title>Bagus Market CDN Uploader</title>
     <style>
         body {
+            background-color: #121212;
+            color: #ffffff;
             font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
-            color: white;
             text-align: center;
             padding: 20px;
         }
         .container {
             max-width: 500px;
             margin: auto;
-            background: #2a2a2a;
+            background: #1e1e1e;
             padding: 20px;
             border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+        }
+        h1 {
+            color: #ffcc00;
         }
         .upload-box {
-            border: 2px dashed #fff;
+            border: 2px dashed #ffcc00;
             padding: 20px;
             cursor: pointer;
+            border-radius: 5px;
             margin-bottom: 20px;
         }
         .upload-box:hover {
-            background: #333;
+            background: rgba(255, 204, 0, 0.1);
         }
-        .result {
-            background: #3a3a3a;
+        .hidden-input {
+            display: none;
+        }
+        .result-box {
+            background: #2a2a2a;
             padding: 10px;
             border-radius: 5px;
+            word-break: break-word;
             margin-top: 10px;
-            word-break: break-all;
+        }
+        a {
+            color: #ffcc00;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h2>Kenz Market CDN Uploader</h2>
-        <p>Upload file & dapatkan link CDN Gratis</p><div class="upload-box">📁 Pilih file atau drop di sini.</div>
-    
-    <div id="result" class="result" style="display:none;"></div>
-</div>
+        <h1>Bagus Market CDN Uploader</h1>
+        <p>Upload file & dapatkan link CDN gratis!</p>
+        <label class="upload-box" for="file-input">
+            📁 Pilih file atau drop di sini
+        </label>
+        <input type="file" id="file-input" class="hidden-input">
+        <div id="result" class="result-box" style="display:none;"></div>
+    </div><script>
+    document.getElementById('file-input').addEventListener('change', function(event) {
+        let file = event.target.files[0];
+        if (file) {
+            let formData = new FormData();
+            formData.append("file", file);
 
-<script>
-    // Simulasi hasil upload
-    function showResult(link) {
-        let resultDiv = document.getElementById("result");
-        resultDiv.innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
-        resultDiv.style.display = "block";
-    }
-
-    // Contoh pemanggilan fungsi setelah upload
-    setTimeout(() => {
-        showResult("https://cdn.kenzmarket.com/uploadedfile.png");
-    }, 2000); // Simulasi delay upload
+            fetch("/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    document.getElementById("result").innerHTML = `<strong>File berhasil diupload!</strong><br><a href="${data.url}" target="_blank">${data.url}</a>`;
+                    document.getElementById("result").style.display = "block";
+                }
+            })
+            .catch(error => console.error("Error:", error));
+        }
+    });
 </script>
 
 </body>
