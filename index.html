@@ -2,53 +2,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagus Market CDN Uploader</title>
-    <link rel="stylesheet" href="/style.css"/><!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+    <title>Kenz Market CDN Uploader</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-    <div class="container">
-        <h1>Bagus Market CDN Uploader</h1>
-        <p>Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
-        <p>Support Bagus Market🌟</p><div id="dropZone" onclick="document.getElementById('fileInput').click();">
-        <p id="dropText">📂 Pilih file atau drop di sini.</p>
-        <input type="file" id="fileInput" hidden>
+<body class="bg-gray-900 text-white">
+    <!-- Header -->
+    <header class="bg-gray-800 p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-3xl font-bold">Kenz Market CDN Uploader</h1>
+            <img src="https://img101.pixhost.to/images/160/547786331_bagus.jpg" alt="Logo" class="w-10 h-10 rounded-full">
+        </div>
+    </header><!-- Main Content -->
+<main class="container mx-auto mt-6 p-4">
+    <!-- Intro Section -->
+    <div class="bg-gray-700 p-6 rounded shadow-lg text-center">
+        <p class="text-lg text-gray-400 font-medium">Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
+        <p class="text-sm text-gray-300">Support Kenz Market🌟</p>
     </div>
 
-    <div class="buttons">
-        <button onclick="clearAll()">Hapus Semua Data</button>
+    <!-- Upload Section -->
+    <div class="mt-6 bg-gray-800 p-6 rounded shadow-lg text-center">
+        <div id="dropZone" class="border-2 border-dashed border-gray-500 p-6 rounded cursor-pointer hover:bg-gray-700" onclick="document.getElementById('fileInput').click();">
+            <p id="dropText" class="text-gray-300">📂 Pilih file atau drop di sini.</p>
+            <input type="file" id="fileInput" hidden>
+        </div>
     </div>
 
-    <div id="result">Hasil akan muncul di sini.</div>
-    <div id="cdnLink"></div>
-    
-    <footer>
-      &copy; 2025 CDN File Uploader By Bagus
-    </footer>
-</div>
+    <!-- Buttons -->
+    <div class="mt-4 flex justify-center">
+        <button onclick="clearAll()" class="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded transition">Hapus Semua Data</button>
+    </div>
 
-<script>
-    document.getElementById('fileInput').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const link = document.createElement('a');
-                link.href = e.target.result;
-                link.textContent = 'Klik di sini untuk mengakses file';
-                document.getElementById('cdnLink').innerHTML = '';
-                document.getElementById('cdnLink').appendChild(link);
-            };
-            reader.readAsDataURL(file);
-        }
-    });
+    <!-- Result Section -->
+    <div id="result" class="mt-4 bg-gray-700 p-4 rounded shadow-lg text-center text-gray-300">Hasil akan muncul di sini.</div>
+</main>
 
-    function clearAll() {
-        document.getElementById('cdnLink').innerHTML = '';
-        document.getElementById('result').textContent = 'Hasil akan muncul di sini.';
-    }
-</script>
+<!-- Footer -->
+<footer class="bg-gray-800 text-white p-4 mt-8 text-center">
+    <p>&copy; 2025 CDN File Uploader By Kenz</p>
+</footer>
+
+<script src="/script.js"></script>
 
 </body>
 </html>
