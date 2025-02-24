@@ -8,7 +8,6 @@ function handleFileUpload(file) {
     if (!file) return;  
 
     let reader = new FileReader();  
-
     reader.onload = function(e) {  
         let fileData = {  
             id: generateID(),  
@@ -20,12 +19,12 @@ function handleFileUpload(file) {
         uploadedFiles.push(fileData);  
         localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));  
 
-        // Menampilkan hasil upload sebagai URL berdasarkan ID
-        let fileURL = window.location.origin + `?bagus=${fileData.id}`;
+        let fileURL = window.location.origin + `?bagus=${fileData.id}`; // URL file  
         
+        // Menampilkan hasil sebagai link biasa
         document.getElementById("result").innerHTML = `
-            <p class="text-green-600 font-semibold">✅ File berhasil diupload!</p>
-            <p class="text-blue-600"><a href="${fileURL}" target="_blank">${fileURL}</a></p>
+            <p class="text-green-600 font-semibold">✅ File berhasil diupload!</p>  
+            <p class="text-blue-600 break-words"><a href="${fileURL}" target="_blank">${fileURL}</a></p>
         `;
     };  
 
@@ -38,13 +37,6 @@ function handleFileUpload(file) {
 
 function generateID() {  
     return Math.random().toString(36).substr(2, 10);  
-}  
-
-function clearAll() {  
-    localStorage.removeItem("uploadedFiles");  
-    uploadedFiles = [];  
-    alert("Semua file dihapus!");  
-    document.getElementById("result").innerHTML = "Hasil akan muncul di sini...";  
 }  
 
 function checkURLForFile() {  
