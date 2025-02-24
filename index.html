@@ -1,103 +1,21 @@
-<!DOCTYPE html><html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kenz Market CDN Uploader</title>
-    <link rel="stylesheet" href="/style.css"/>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background: url('https://source.unsplash.com/1600x900/?space,galaxy') no-repeat center center fixed;
-            background-size: cover;
-            font-family: 'Orbitron', sans-serif;
-            color: white;
-            text-align: center;
-        }
-        .container {
-            margin-top: 50px;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
-        }
-        #dropZone {
-            border: 2px dashed #fff;
-            padding: 20px;
-            cursor: pointer;
-            margin: 20px;
-        }
-        button {
-            background: #ff9800;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        footer {
-            margin-top: 20px;
-            opacity: 0.7;
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1>Kenz Market CDN Uploader</h1>
-        <p>Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
-        <p>Support Kenz Market 🌟</p>
-        <div id="dropZone" onclick="document.getElementById('fileInput').click();">
-            <p id="dropText">📂 Pilih file atau drop di sini.</p>
-            <input type="file" id="fileInput" hidden>
-        </div>
-        <div class="buttons">
-            <button onclick="clearAll()">Hapus Semua Data</button>
-        </div>
-        <div id="result">Hasil akan muncul di sini.</div>
-        <footer>&copy; 2025 CDN File Uploader By Kenz</footer>
-    </div>
-    <script>
-        let uploadedFiles = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
-        document.getElementById("fileInput").addEventListener("change", function(event) {
-            handleFileUpload(event.target.files[0]);
-        });function handleFileUpload(file) {
-        if (!file) return;
-        let reader = new FileReader();
-        reader.onload = function(e) {
-            let fileData = {
-                id: generateID(),
-                name: file.name,
-                size: (file.size / 1024).toFixed(2) + ' KB',
-                time: new Date().toLocaleString(),
-                type: file.type,
-                content: e.target.result
-            };
-            uploadedFiles.push(fileData);
-            localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));
-            document.getElementById("result").innerHTML = `<p>✅ File berhasil diupload!</p>
-                <a href="?kenzcdn=${fileData.id}" target="_blank">🔗 Lihat File</a>`;
-            sendTelegramNotification(fileData);
-        };
-        reader.readAsDataURL(file);
-    }
+<!DOCTYPE html>  <html lang="id">    <head>    
+    <meta charset="UTF-8">    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">    
+    <title>Bagus || CDN</title>    
+    <link rel="stylesheet" href="/style.css"/>  <!-- Google Fonts -->    
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">  </head>    
+<body>  <div class="container">    
+    <h1>Bagus Uploader</h1>    
+    <p>Website Upload Image To Url</p>    
+    <p>Bagus Xixepen</p>    <div id="dropZone" onclick="document.getElementById('fileInput').click();">    
+    <p id="dropText">Pilih File</p>    
+    <input type="file" id="fileInput" hidden>    
+</div>    
 
-    function sendTelegramNotification(fileData) {
-        let botToken = "YOUR_BOT_TOKEN";
-        let chatId = "YOUR_CHAT_ID";
-        let message = `Uploader Baru Ni Icibos%0A%0AResult: ${fileData.name}%0ASize: ${fileData.size}%0ATime: ${fileData.time}`;
-        fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${message}`);
-    }
+<div id="result">Result</div>    
+<footer>    
+  &copy; Bagus Uploader || 2024   
+</footer>
 
-    function generateID() {
-        return Math.random().toString(36).substr(2, 10);
-    }
-
-    function clearAll() {
-        localStorage.removeItem("uploadedFiles");
-        uploadedFiles = [];
-        alert("Semua file dihapus!");
-        document.getElementById("result").innerHTML = "Hasil akan muncul di sini...";
-    }
-</script>
-
-</body>
+</div>    <script src="/script.js"></script>  </body>    
 </html>
