@@ -19,12 +19,11 @@ function handleFileUpload(file) {
         uploadedFiles.push(fileData);  
         localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));  
 
-        let fileURL = window.location.origin + `?bagus=${fileData.id}`; // URL file  
-        
-        // Menampilkan hasil sebagai link biasa
+        let fileURL = window.location.origin + "?bagus=" + fileData.id;
+
         document.getElementById("result").innerHTML = `
-            <p class="text-green-600 font-semibold">✅ File berhasil diupload!</p>  
-            <p class="text-blue-600 break-words"><a href="${fileURL}" target="_blank">${fileURL}</a></p>
+            <p class="text-green-600 font-semibold">✅ File berhasil diupload!</p>
+            <a href="${fileURL}" class="text-blue-600 underline">${fileURL}</a>
         `;
     };  
 
@@ -33,7 +32,7 @@ function handleFileUpload(file) {
     } else {  
         reader.readAsText(file);  
     }  
-}  
+}
 
 function generateID() {  
     return Math.random().toString(36).substr(2, 10);  
