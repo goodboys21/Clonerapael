@@ -20,8 +20,8 @@ let uploadedFiles = JSON.parse(localStorage.getItem("uploadedFiles")) || [];
                 localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));
 
                 document.getElementById("result").innerHTML = `
-                    <p>✅ File berhasil diupload!</p>
-                    <a class="json-link" href="?kenzcdn=${fileData.id}" target="_blank">🔗 Lihat File</a>
+                    <p></p>
+                    <a class="json-link" href="?bagus=${fileData.id}" target="_blank">🔗 Lihat File</a>
                 `;
             };
 
