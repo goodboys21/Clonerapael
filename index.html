@@ -3,73 +3,52 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bagus Market CDN Uploader</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8fbe9;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
-            max-width: 400px;
-            margin: auto;
-            border: 3px solid black;
-        }
-        h1 {
-            color: #ff5722;
-        }
-        p {
-            color: black;
-            font-size: 14px;
-        }
-        #dropZone {
-            background: #87ceeb;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            margin: 15px 0;
-            border: 2px solid black;
-            font-weight: bold;
-        }
-        button {
-            background: #ff9800;
-            border: none;
-            padding: 10px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-            border: 2px solid black;
-        }
-        #result {
-            background: #ffffff;
-            padding: 10px;
-            border-radius: 8px;
-            margin-top: 15px;
-            border: 2px solid black;
-        }
-        footer {
-            margin-top: 20px;
-            font-size: 12px;
-        }
-    </style>
+    <link rel="stylesheet" href="/style.css"/><!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
 <body>
     <div class="container">
         <h1>Bagus Market CDN Uploader</h1>
         <p>Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
-        <p>Support Bagus Market🌟</p>
-        <div id="dropZone" onclick="document.getElementById('fileInput').click();">
-            📂 Pilih file atau drop di sini.
-            <input type="file" id="fileInput" hidden>
-        </div>
-        <button onclick="clearAll()">Hapus Semua Data</button>
-        <div id="result">Hasil akan muncul di sini.</div>
-        <footer>&copy; 2025 CDN File Uploader By Bagus</footer>
+        <p>Support Bagus Market🌟</p><div id="dropZone" onclick="document.getElementById('fileInput').click();">
+        <p id="dropText">📂 Pilih file atau drop di sini.</p>
+        <input type="file" id="fileInput" hidden>
     </div>
+
+    <div class="buttons">
+        <button onclick="clearAll()">Hapus Semua Data</button>
+    </div>
+
+    <div id="result">Hasil akan muncul di sini.</div>
+    <div id="cdnLink"></div>
+    
+    <footer>
+      &copy; 2025 CDN File Uploader By Bagus
+    </footer>
+</div>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const link = document.createElement('a');
+                link.href = e.target.result;
+                link.textContent = 'Klik di sini untuk mengakses file';
+                document.getElementById('cdnLink').innerHTML = '';
+                document.getElementById('cdnLink').appendChild(link);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    function clearAll() {
+        document.getElementById('cdnLink').innerHTML = '';
+        document.getElementById('result').textContent = 'Hasil akan muncul di sini.';
+    }
+</script>
+
 </body>
 </html>
