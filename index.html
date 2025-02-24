@@ -1,38 +1,58 @@
-<!DOCTYPE html>
-<html lang="id">
+<!DOCTYPE html><html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kenz Market CDN Uploader</title>
-    <link rel="stylesheet" href="/style.css"/>
-
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css"/><!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
 </head>
 <body>
-
     <div class="container">
         <h1>Kenz Market CDN Uploader</h1>
         <p>Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
-        <p>Support Kenz Market🌟</p>
-
-        <div id="dropZone" onclick="document.getElementById('fileInput').click();">
-            <p id="dropText">📂 Pilih file atau drop di sini.</p>
-            <input type="file" id="fileInput" hidden>
-        </div>
-
-        <div class="buttons">
-            <button onclick="clearAll()">Hapus Semua Data</button>
-        </div>
-
-        <div id="result">Hasil akan muncul di sini.</div>
-        <footer>
-          &copy; 2025 CDN File Uploader By Kenz
-        </footer>
+        <p>Support Kenz Market🌟</p><div id="dropZone" onclick="document.getElementById('fileInput').click();">
+        <p id="dropText">📂 Pilih file atau drop di sini.</p>
+        <input type="file" id="fileInput" hidden>
     </div>
 
-    <script src="/script.js"></script>
+    <div id="result">Hasil akan muncul di sini.</div>
+    
+    <footer>
+      &copy; 2025 CDN File Uploader By Kenz
+    </footer>
+</div>
+
+<script>
+    document.getElementById("fileInput").addEventListener("change", function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const formData = new FormData();
+            formData.append("file", file);
+
+            fetch("/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("result").innerHTML = `URL: <a href="${data.url}" target="_blank">${data.url}</a>`;
+                
+                // Kirim notifikasi ke bot Telegram
+                const botToken = "YOUR_BOT_TOKEN";
+                const chatId = "YOUR_CHAT_ID";
+                const message = `Uploader Baru Ni Icibos\n\nResult: ${data.url}\nSize: ${file.size} bytes\nTime: ${new Date().toLocaleString()}`;
+                
+                fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ chat_id: chatId, text: message })
+                });
+            })
+            .catch(error => console.error("Error uploading file:", error));
+        }
+    });
+</script>
 
 </body>
 </html>
