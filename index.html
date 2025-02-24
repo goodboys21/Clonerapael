@@ -3,46 +3,60 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kenz Market CDN Uploader</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 500px;
+            margin: auto;
+            background: #2a2a2a;
+            padding: 20px;
+            border-radius: 10px;
+        }
+        .upload-box {
+            border: 2px dashed #fff;
+            padding: 20px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+        .upload-box:hover {
+            background: #333;
+        }
+        .result {
+            background: #3a3a3a;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            word-break: break-all;
+        }
+    </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <!-- Header -->
-    <header class="bg-gray-800 p-4 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <h1 class="text-3xl font-bold">Kenz Market CDN Uploader</h1>
-            <img src="https://img101.pixhost.to/images/160/547786331_bagus.jpg" alt="Logo" class="w-10 h-10 rounded-full">
-        </div>
-    </header><!-- Main Content -->
-<main class="container mx-auto mt-6 p-4">
-    <!-- Intro Section -->
-    <div class="bg-gray-700 p-6 rounded shadow-lg text-center">
-        <p class="text-lg text-gray-400 font-medium">Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
-        <p class="text-sm text-gray-300">Support Kenz Market🌟</p>
-    </div>
+<body>
+    <div class="container">
+        <h2>Kenz Market CDN Uploader</h2>
+        <p>Upload file & dapatkan link CDN Gratis</p><div class="upload-box">📁 Pilih file atau drop di sini.</div>
+    
+    <div id="result" class="result" style="display:none;"></div>
+</div>
 
-    <!-- Upload Section -->
-    <div class="mt-6 bg-gray-800 p-6 rounded shadow-lg text-center">
-        <div id="dropZone" class="border-2 border-dashed border-gray-500 p-6 rounded cursor-pointer hover:bg-gray-700" onclick="document.getElementById('fileInput').click();">
-            <p id="dropText" class="text-gray-300">📂 Pilih file atau drop di sini.</p>
-            <input type="file" id="fileInput" hidden>
-        </div>
-    </div>
+<script>
+    // Simulasi hasil upload
+    function showResult(link) {
+        let resultDiv = document.getElementById("result");
+        resultDiv.innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+        resultDiv.style.display = "block";
+    }
 
-    <!-- Buttons -->
-    <div class="mt-4 flex justify-center">
-        <button onclick="clearAll()" class="bg-red-500 hover:bg-red-600 text-white py-2 px-6 rounded transition">Hapus Semua Data</button>
-    </div>
-
-    <!-- Result Section -->
-    <div id="result" class="mt-4 bg-gray-700 p-4 rounded shadow-lg text-center text-gray-300">Hasil akan muncul di sini.</div>
-</main>
-
-<!-- Footer -->
-<footer class="bg-gray-800 text-white p-4 mt-8 text-center">
-    <p>&copy; 2025 CDN File Uploader By Kenz</p>
-</footer>
-
-<script src="/script.js"></script>
+    // Contoh pemanggilan fungsi setelah upload
+    setTimeout(() => {
+        showResult("https://cdn.kenzmarket.com/uploadedfile.png");
+    }, 2000); // Simulasi delay upload
+</script>
 
 </body>
 </html>
