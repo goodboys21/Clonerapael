@@ -1,84 +1,38 @@
-<!DOCTYPE html><html lang="id">
+<!DOCTYPE html>
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bagus Market CDN Uploader</title>
-    <style>
-        body {
-            background-color: #121212;
-            color: #ffffff;
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        .container {
-            max-width: 500px;
-            margin: auto;
-            background: #1e1e1e;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
-        }
-        h1 {
-            color: #ffcc00;
-        }
-        .upload-box {
-            border: 2px dashed #ffcc00;
-            padding: 20px;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
-        .upload-box:hover {
-            background: rgba(255, 204, 0, 0.1);
-        }
-        .hidden-input {
-            display: none;
-        }
-        .result-box {
-            background: #2a2a2a;
-            padding: 10px;
-            border-radius: 5px;
-            word-break: break-word;
-            margin-top: 10px;
-        }
-        a {
-            color: #ffcc00;
-            text-decoration: none;
-        }
-    </style>
+    <title>Kenz Market CDN Uploader</title>
+    <link rel="stylesheet" href="/style.css"/>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
 </head>
 <body>
-    <div class="container">
-        <h1>Bagus Market CDN Uploader</h1>
-        <p>Upload file & dapatkan link CDN gratis!</p>
-        <label class="upload-box" for="file-input">
-            📁 Pilih file atau drop di sini
-        </label>
-        <input type="file" id="file-input" class="hidden-input">
-        <div id="result" class="result-box" style="display:none;"></div>
-    </div><script>
-    document.getElementById('file-input').addEventListener('change', function(event) {
-        let file = event.target.files[0];
-        if (file) {
-            let formData = new FormData();
-            formData.append("file", file);
 
-            fetch("/upload", {
-                method: "POST",
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.url) {
-                    document.getElementById("result").innerHTML = `<strong>File berhasil diupload!</strong><br><a href="${data.url}" target="_blank">${data.url}</a>`;
-                    document.getElementById("result").style.display = "block";
-                }
-            })
-            .catch(error => console.error("Error:", error));
-        }
-    });
-</script>
+    <div class="container">
+        <h1>Kenz Market CDN Uploader</h1>
+        <p>Upload file & dapatkan link CDN Gratis Untuk URL Anda</p>
+        <p>Support Kenz Market🌟</p>
+
+        <div id="dropZone" onclick="document.getElementById('fileInput').click();">
+            <p id="dropText">📂 Pilih file atau drop di sini.</p>
+            <input type="file" id="fileInput" hidden>
+        </div>
+
+        <div class="buttons">
+            <button onclick="clearAll()">Hapus Semua Data</button>
+        </div>
+
+        <div id="result">Hasil akan muncul di sini.</div>
+        <footer>
+          &copy; 2025 CDN File Uploader By Kenz
+        </footer>
+    </div>
+
+    <script src="/script.js"></script>
 
 </body>
 </html>
