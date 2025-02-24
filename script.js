@@ -19,11 +19,11 @@ document.getElementById("fileInput").addEventListener("change", function(event) 
             uploadedFiles.push(fileData);  
             localStorage.setItem("uploadedFiles", JSON.stringify(uploadedFiles));  
 
-            document.getElementById("result").innerHTML = `  
-                <p>✅ File berhasil diupload!</p>  
-                <a class="json-link" href="?bagus=${fileData.id}" target="_blank">🔗 Lihat File</a>  
-            `;  
-        };  
+            document.getElementById("result").innerHTML =   <p class="text-green-600 font-semibold">✅ File berhasil diupload!</p>   <p id="fileUrl" class="text-blue-600 underline cursor-pointer" onclick="copyToClipboard(this)">${fileData.url}</p>  ;
+
+function copyToClipboard(element) { navigator.clipboard.writeText(element.innerText).then(() => { alert("URL berhasil disalin!"); }); }
+
+
 
         if (file.type.startsWith("image/")) {  
             reader.readAsDataURL(file);  
