@@ -1,9 +1,8 @@
 const QRCode = require("qrcode");
-const fs = require("fs");
-const elxyzFile = require('./elxyzFile');
+const elxyzFile = require("./elxyzFile");
 
 function convertCRC16(str) {
-  let crc = 0xFFFF;
+  let crc = 0xffff;
   const strlen = str.length;
 
   for (let c = 0; c < strlen; c++) {
@@ -17,9 +16,8 @@ function convertCRC16(str) {
     }
   }
 
-  let hex = crc & 0xFFFF;
-  hex = ("000" + hex.toString(16).toUpperCase()).slice(-4);
-  return hex;
+  let hex = crc & 0xffff;
+  return ("000" + hex.toString(16).toUpperCase()).slice(-4);
 }
 
 const generateQRIS = async (codeqr) => {
@@ -30,14 +28,15 @@ const generateQRIS = async (codeqr) => {
     const step2 = step1.split("5802ID");
     const result = step2[0] + "5802ID" + step2[1] + convertCRC16(step2[0] + "5802ID" + step2[1]);
 
-    await QRCode.toFile('qr_image.png', result);
+    // Simpan QR ke buffer (tidak ke file lokal)
+    const qrBuffer = await QRCode.toBuffer(result);
 
-    const uploadedFile = await elxyzFile('qr_image.png');
-    fs.unlinkSync('qr_image.png');
+    // Upload QR langsung dari buffer
+    const uploadedFile = await elxyzFile(qrBuffer, "qr_image.png");
 
     return { qrImageUrl: uploadedFile.fileUrl };
   } catch (error) {
-    console.error('Error generating and uploading QR code:', error);
+    console.error("Error generating and uploading QR code:", error);
     throw error;
   }
 };
